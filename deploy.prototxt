@@ -1,0 +1,331 @@
+name: "DeepBlueSky"
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 240
+input_dim: 320 
+layers {
+  name: "dummy_data"
+  type: DUMMY_DATA
+  top: "label_0"
+  dummy_data_param {
+    data_filler {
+      type: "constant"
+      std: .5 
+    }
+    num: 1 
+    channels: 1
+    height: 240
+    width: 320
+  }
+}
+
+layers {
+  name: "combine_1"
+  type: CONCAT
+  bottom: "data"
+  bottom: "label_0"
+  top: "combine_1"
+  concat_param {
+    concat_dim: 1
+  }
+}
+layers {
+  name: "conv1_1"
+  type: CONVOLUTION
+  bottom: "combine_1"
+  top: "conv1_1"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 20 
+    pad: 4
+    kernel_size: 9 
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv1_blob_W"
+  param: "conv1_blob_b"
+}
+layers {
+  name: "act1_1"
+  type: TANH 
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layers {
+  name: "conv2_1"
+  type: CONVOLUTION
+  bottom: "conv1_1"
+  top: "conv2_1"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 15 
+    pad: 4
+    kernel_size: 9 
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv2_blob_W"
+  param: "conv2_blob_b"
+}
+layers {
+  name: "act2_1"
+  type: TANH 
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layers {
+  name: "conv3_1"
+  type: CONVOLUTION
+  bottom: "conv2_1"
+  top: "conv3_1"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 1 
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv3_blob_W"
+  param: "conv3_blob_b"
+}
+layers {
+  name: "act3_1"
+  type: SIGMOID 
+  bottom: "conv3_1"
+  top: "label_1"
+}
+
+
+
+
+
+layers {
+  name: "combine_2"
+  type: CONCAT
+  bottom: "data"
+  bottom: "label_1"
+  top: "combine_2"
+  concat_param {
+    concat_dim: 1
+  }
+}
+layers {
+  name: "conv1_2"
+  type: CONVOLUTION
+  bottom: "combine_2"
+  top: "conv1_2"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 20 
+    pad: 4
+    kernel_size: 9 
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv1_blob_W"
+  param: "conv1_blob_b"
+}
+layers {
+  name: "act1_2"
+  type: TANH 
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layers {
+  name: "conv2_2"
+  type: CONVOLUTION
+  bottom: "conv1_2"
+  top: "conv2_2"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 15 
+    pad: 4
+    kernel_size: 9 
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv2_blob_W"
+  param: "conv2_blob_b"
+}
+layers {
+  name: "act2_2"
+  type: TANH 
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layers {
+  name: "conv3_2"
+  type: CONVOLUTION
+  bottom: "conv2_2"
+  top: "conv3_2"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 1 
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv3_blob_W"
+  param: "conv3_blob_b"
+}
+layers {
+  name: "act3_2"
+  type: SIGMOID 
+  bottom: "conv3_2"
+  top: "label_2"
+}
+
+
+
+layers {
+  name: "combine_3"
+  type: CONCAT
+  bottom: "data"
+  bottom: "label_2"
+  top: "combine_3"
+  concat_param {
+    concat_dim: 1
+  }
+}
+layers {
+  name: "conv1_3"
+  type: CONVOLUTION
+  bottom: "combine_3"
+  top: "conv1_3"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 20 
+    pad: 4
+    kernel_size: 9
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv1_blob_W"
+  param: "conv1_blob_b"
+}
+layers {
+  name: "act1_3"
+  type: TANH 
+  bottom: "conv1_3"
+  top: "conv1_3"
+}
+layers {
+  name: "conv2_3"
+  type: CONVOLUTION
+  bottom: "conv1_3"
+  top: "conv2_3"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 15 
+    pad: 4
+    kernel_size: 9 
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv2_blob_W"
+  param: "conv2_blob_b"
+}
+layers {
+  name: "act2_3"
+  type: TANH 
+  bottom: "conv2_3"
+  top: "conv2_3"
+}
+layers {
+  name: "conv3_3"
+  type: CONVOLUTION
+  bottom: "conv2_3"
+  top: "conv3_3"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 1 
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  param: "conv3_blob_W"
+  param: "conv3_blob_b"
+}
+layers {
+  name: "act3_3"
+  type: SIGMOID 
+  bottom: "conv3_3"
+  top: "label_3"
+}
+
